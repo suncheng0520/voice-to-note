@@ -1,0 +1,6 @@
+interface:
+  display_name: "分析口條"
+  short_description: "重跑 voice-to-note 口條指標，對照基準並給出錄音表達建議"
+  default_prompt: "Use $analyze-delivery to 分析口條。"
+policy:
+  allow_implicit_invocation: true

@@ -1,0 +1,39 @@
+# ── 系統 / 編輯器 ──
+.DS_Store
+.vscode/
+
+# ── Python ──
+__pycache__/
+*.pyc
+
+# ── Claude Code:本地設定不入版控;commands/ 與 workflows/ 是工作流定義,要入版控 ──
+.claude/*
+!.claude/commands/
+!.claude/workflows/
+
+# ── 日誌 ──
+scripts/*.log
+_inbox/.process_log
+
+# ── 音檔與可重新生成的轉錄中間產物(靠本地 / iCloud 保存,不入版控)──
+_inbox/
+_transcripts_raw/
+_transcripts_clean/
+
+# ── 私人文字內容:校對稿、潤讀稿、fine-tune 語料(不公開)──
+_proofread/
+_polished/
+_alignment/
+_corpus_raw/
+sample_proofread*.md
+
+# ── 個人詞典與規則(含私人人名;公開範本見 dictionary.example.yaml / rules.example.yaml)──
+dictionary.yaml
+rules.yaml
+
+# ── 個人分析文件與筆記(內容摘要自私人錄音)──
+docs/文風回饋-*.md
+docs/口條*.md
+docs/sensevoice_vs_faster.md
+使用說明.txt
+STATUS.md

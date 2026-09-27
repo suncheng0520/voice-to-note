@@ -1,0 +1,41 @@
+# 同音 / 近音錯誤替換規則(範本)
+#
+# 複製成 rules.yaml 後填入你自己的規則:
+#   cp rules.example.yaml rules.yaml
+#
+# scripts/apply_rules.py 會依序套用兩種規則:
+#
+# 1. simple_replacements:無歧義,全域字串取代
+#    用於「錯誤字組本身不是常用詞」的情況,例如「貼杵」只可能是「鐵杵」。
+#
+# 2. context_replacements:有歧義,用 regex 限定上下文
+#    用於「錯誤字本身也是常用字」的情況,例如「被 / 背」不能全域換,
+#    只在特定語境下換。pattern 是 Python re 語法,replace 可用 \1 \2 反向參照,
+#    note 選填,只用來印在套用紀錄裡。
+#
+# 維護原則:
+#   - 寧可少加,不要因為一次錯誤就無腦加
+#   - context_replacements 的 regex 要寫得保守,寧可漏抓不要錯抓
+#   - 每條附一行註解:來源稿、哪個引擎、為什麼
+
+simple_replacements:
+  # 成語 / 固定用語的同音誤判
+  - { from: "八九不離死", to: "八九不離十" }
+  - { from: "信所拈來", to: "信手拈來" }
+  - { from: "血雙加雙", to: "雪上加霜" }
+  - { from: "貼杵", to: "鐵杵" }        # 「鐵杵磨成繡花針」
+  # 專有名詞的固定誤判(也可以靠 dictionary.yaml 熱詞從源頭預防)
+  - { from: "蘇廣華", to: "叔本華" }    # 四引擎全崩的案例
+  # 統一寫法
+  - { from: "半調子", to: "半吊子" }
+
+context_replacements:
+  # 「被 → 背」:只在身體酸痛語境下替換
+  - pattern: "被([很蠻好真特別]{1,2}酸)"
+    replace: "背\\1"
+    note: "『被很酸 → 背很酸』"
+
+  # 「城市 → 程式」:只在技術語境下
+  - pattern: "城市(幫|寫|跑|執行|教)"
+    replace: "程式\\1"
+    note: "技術語境下的『城市 → 程式』"
